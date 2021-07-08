@@ -19,15 +19,15 @@ const empleados = [
 const salarios = [
     {
         id:1,
-        nombre: 1200
+        cantidad: 1200
     },
     {
         id:2,
-        nombre: 1500
+        cantidad: 1500
     }
 ];
 
-//Forma 1
+
 const getSalario = (id,callback)=>{
     const salario = salarios.find(e=>e.id===id);
     if(salario) callback(null,salario);
