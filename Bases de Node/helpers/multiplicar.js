@@ -2,7 +2,7 @@ const multiplicar = (base=1,n)=>base*n;
 
 const fs = require("fs");
 
-const crearArchivoTabla = async(base=1) =>{
+const crearArchivoTabla = async(base=0) =>{
     try {
         let salida = "";
         const nombreArchivo = `./Tabla_del_${base}.txt`
