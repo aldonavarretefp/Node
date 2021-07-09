@@ -48,22 +48,32 @@ const getNombreEmpleado = (id) => {
     });
 }
 
-const id = 3;
+const id = 2;
 
 
 //Famoso CallBack Hell
-getNombreEmpleado(id)
-    .then(
-        nombreEmpleado => {
-            getSalario(id)
-            .then(
-                salario => {
-                    console.log(`El nombre del empleado es ${nombreEmpleado}`)
-                    console.log(`El salario con id ${id} es ${salario}`)
-                }
-            )
-            .catch(err =>console.log(err))
+// getNombreEmpleado(id)
+//     .then(
+//         nombreEmpleado => {
+//             getSalario(id)
+//             .then(
+//                 salario => {
+//                     console.log(`El nombre del empleado es ${nombreEmpleado}`)
+//                     console.log(`El salario con id ${id} es ${salario}`)
+//                 }
+//             )
+//             .catch(err =>console.log(err))
             
-        } 
-    )
-    .catch(err =>console.log(err))
+//         } 
+//     )
+//     .catch(err =>console.log(err))
+
+//Promesas en cadena
+let nombre;
+getNombreEmpleado(id)
+    .then(empleado =>{
+        nombre = empleado
+        return getSalario(id)
+    })
+    .then(salario => console.log(`El Empleado ${nombre} tiene salario de ${salario}`))
+    .catch(err=>console.log(err))
