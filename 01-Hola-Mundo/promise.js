@@ -76,4 +76,6 @@ getNombreEmpleado(id)
         return getSalario(id)
     })
     .then(salario => console.log(`El Empleado ${nombre} tiene salario de ${salario}`))
-    .catch(err=>console.log(err))
+    .catch(err=>console.log(err)) //solo hacemos un error global
+
+    
