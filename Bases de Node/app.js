@@ -1,11 +1,21 @@
+const fs = require("fs");
 const multiplicar = (base,n)=>base*n;
 
 console.clear();
-console.log("============")
-console.log("Tabla del 5")
-console.log("============")
+let salida = "";
+const base = 3;
 
-const base = 5
+salida+="============\n"
+salida+=`Tabla del ${base}\n`
+salida+="============\n"
+
+
 for (let i = 1; i < 11; i++) {
-    console.log(`${base} x ${i} = ${multiplicar(base,i)}`)
-  }
+    salida += (`${base} x ${i} = ${multiplicar(base,i)}\n`);
+}
+
+const path = `./Tabla_del_${base}.txt`
+fs.writeFile(path,salida,(err)=>{
+    if(err) throw err;
+    console.log(`${path} creada`)
+})
