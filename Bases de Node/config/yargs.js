@@ -1,3 +1,5 @@
+const { alias } = require("yargs");
+
 const argv = require("yargs")
                 .option('b',{
                     alias: 'base',
@@ -10,6 +12,12 @@ const argv = require("yargs")
                     type:'boolean',
                     default: false,
                     describe: "Muestra la tabla en consola"
+                })
+                .option("t",{
+                    alias: "hasta",
+                    type: 'number',
+                    default: 10,
+                    describe: 'Limite multiplicativo'
                 })
                 .check((argv,options)=>{
                     if (isNaN(argv.base)) throw 'ERROR: La base debe ser un numero'.red; 
