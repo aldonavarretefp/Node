@@ -41,11 +41,13 @@ const preguntas = [
 ];
 
 const inquirerMenu = async () => {
+    console.clear();
     const {opt} =await inquirer.prompt(preguntas)
     return opt;
 
 }
 const inquirerPausa = async ()=>{
+    console.log("\n");
     await inquirer.prompt(
         {
             type:"input",
