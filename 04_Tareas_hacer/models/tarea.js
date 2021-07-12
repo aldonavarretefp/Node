@@ -5,7 +5,7 @@ class Tarea{
     desc ='';
     completadoEn;
 
-    constructor( desc ){
+    constructor( desc = '' ){
         this.desc = desc;
         this.id = uuidv4();
         this.completadoEn = null;
