@@ -43,6 +43,9 @@ const preguntas = [
 
 const inquirerMenu = async () => {
     console.clear();
+    console.log("===============".america)
+    console.log("   ToDoList")
+    console.log("===============".america)
     const {opt} =await inquirer.prompt(preguntas)
     return opt;
 
@@ -58,7 +61,7 @@ const inquirerPausa = async ()=>{
     )
 }
 
-const leerInput = async (message)=>{
+const leerInput = async (message = '')=>{
     const preguntas = [
         {
             type: 'input',
