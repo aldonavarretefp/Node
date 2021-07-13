@@ -22,6 +22,17 @@ class Tareas {
             delete this._listado[id];
         }
     }
+    completarTareas(ids = []){
+        ids.forEach(id =>{
+            const tarea = this._listado[id];
+            if(!tarea.completadoEn) tarea.completadoEn = new Date().toISOString();
+
+        });
+
+        Object.values(this._listado).forEach(tarea=>{
+            if(!ids.includes(tarea.id)) tarea.completadoEn = null;
+        })
+    }
 
     
     crearTarea(desc = ''){
@@ -41,7 +52,7 @@ class Tareas {
             const indice = `${i+1}.`.green;
             const {desc,completadoEn} = tarea;
             const estado = completadoEn
-                            ? "Completado".green
+                            ? `Completada`.green
                             : "Pendiente".red;
 
             console.log(`\t${indice} ${desc} :: ${estado}`);
@@ -54,7 +65,7 @@ class Tareas {
         (completadas)
         ?
             Object.values(this._listado).forEach((tarea)=>{
-                if(tarea.completadoEn === completadas){
+                if(tarea.completadoEn){
                     indice +=1;
                     const {desc,completadoEn} = tarea;
                     const estado = "Completada".green
