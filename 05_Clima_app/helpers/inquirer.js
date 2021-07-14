@@ -2,30 +2,31 @@ const inquirer = require('inquirer');
 const { validate } = require('uuid');
 require('colors');
 
-const preguntas = [
-    {
-        type:"list",
-        name: "opt",
-        message: "Selecciona la opción deseada: ",
-        choices: [
-            {
-                value: 1,
-                name:`${"1.".green} Buscar Ciudad`
-            },
-            {
-                value: 2,
-                name:`${"2.".green} Historial`
-            },
-            {
-                value: 0,
-                name:`${"0.".green} Salir`
-            },
-        ]
-    }
-];
+
 
 const inquirerMenu = async () => {
     console.clear();
+    const preguntas = [
+        {
+            type:"list",
+            name: "opt",
+            message: "Selecciona la opción deseada: ",
+            choices: [
+                {
+                    value: 1,
+                    name:`${"1.".green} Buscar Ciudad`
+                },
+                {
+                    value: 2,
+                    name:`${"2.".green} Historial`
+                },
+                {
+                    value: 0,
+                    name:`${"0.".green} Salir`
+                },
+            ]
+        }
+    ];
     console.log("\t===============".green)
     console.log("\t   Aplicacion clima")
     console.log("\t===============".green)
@@ -87,28 +88,6 @@ const listarLugares = async (lugares =[]) =>{
     const {id} = await inquirer.prompt(preguntas);
     return id;
 }
-const listarTareasCompletar = async (tareas =[]) =>{
-    const choices = tareas.map((tarea,i)=>{
-        let index = i+1
-        return {
-            value: tarea.id,
-            name: `\t${`${index}.`.green} ${tarea.desc}`,
-            checked: ( tarea.completadoEn ) ? true : false
-        }
-    });
-    
-    const preguntas = [
-        {
-            type: "checkbox",
-            name: "ids",
-            message: 'Completar: ',
-            choices
-        }
-    ];
-
-    const {ids} = await inquirer.prompt(preguntas);
-    return ids;
-}
 
 const confirmar = async (msg= '') =>  {
     const preguntas = [
@@ -127,6 +106,5 @@ module.exports = {
     inquirerPausa,
     leerInput,
     confirmar,
-    listarTareasCompletar,
     listarLugares
 }
