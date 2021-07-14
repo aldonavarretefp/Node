@@ -24,9 +24,15 @@ class Busquedas {
             });
 
             const resp = await instance.get();
-
-            console.log(resp.data);
-            return []; //Retornar los lugares que coincidan    
+            // console.log(resp.data.features); //Aqui estan las posibles respuestas, vamos a mapearlas
+            //TODO: id, nombre, long,lat
+            
+            return resp.data.features.map((ciudad:any )=> ({
+                id: ciudad.id,
+                nombre: ciudad.place_name_es,
+                long: ciudad.center[0],
+                lat:ciudad.center[1],
+            }));
         } catch (error) {
             // throw error para reventar la aplicacion
             return [];

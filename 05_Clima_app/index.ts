@@ -10,8 +10,8 @@ const main = async () =>{
 
     let opt:number;
     const busquedas = new Busquedas();
-    let lugar:string;
-    let posiblesLugares:string[];
+    let lugarABuscar:string;
+    let posiblesLugares:any[];
 
     do {
         opt = await inquirerMenu();
@@ -22,10 +22,12 @@ const main = async () =>{
                     break;
                 case 1:
                     //Mostrar mensaje
-                    lugar = await leerInput("Ciudad: ");
+                    lugarABuscar = await leerInput("Ciudad: ");
                     //Buscar los lugares
-                    posiblesLugares = busquedas.buscarCiudad(lugar);
+                    posiblesLugares = await busquedas.buscarCiudad(lugarABuscar);
+                    console.log(posiblesLugares);
                     //Seleccionar el lugar
+                    
                     //Clima
                     // Mostrar Resultados
                     console.log(`\n\t=======Información de la Ciudad======\n`.bgWhite.black);

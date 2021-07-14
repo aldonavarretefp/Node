@@ -16,7 +16,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     console.clear();
     let opt;
     const busquedas = new Busquedas();
-    let lugar;
+    let lugarABuscar;
     let posiblesLugares;
     do {
         opt = yield inquirerMenu();
@@ -25,8 +25,9 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
                 case 0:
                     break;
                 case 1:
-                    lugar = yield leerInput("Ciudad: ");
-                    posiblesLugares = busquedas.buscarCiudad(lugar);
+                    lugarABuscar = yield leerInput("Ciudad: ");
+                    posiblesLugares = yield busquedas.buscarCiudad(lugarABuscar);
+                    console.log(posiblesLugares);
                     console.log(`\n\t=======Información de la Ciudad======\n`.bgWhite.black);
                     console.log(`Ciudad: `.yellow);
                     console.log(`Lat: `.yellow);
