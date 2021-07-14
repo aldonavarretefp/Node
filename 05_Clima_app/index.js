@@ -8,28 +8,35 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 const { leerInput, inquirerMenu, inquirerPausa } = require("./helpers/inquirer");
 const Busquedas = require("./models/busquedas");
-require("colors");
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
     let opt;
     const busquedas = new Busquedas();
     do {
         opt = yield inquirerMenu();
         if (opt !== 0) {
-            console.log(opt);
-            yield inquirerPausa();
-        }
-        switch (opt) {
-            case 0:
-                //salir
-                break;
-            case 1:
-                break;
-            case 2:
-                break;
-            default:
-                break;
+            switch (opt) {
+                case 0:
+                    break;
+                case 1:
+                    const lugar = yield leerInput("Ciudad: ");
+                    console.log(`\n\t=======Información de la Ciudad======\n`.bgWhite.black);
+                    console.log(`Ciudad: `.yellow);
+                    console.log(`Lat: `.yellow);
+                    console.log(`Long: `.yellow);
+                    console.log(`Temperatura: `.yellow);
+                    console.log(`Temperatura min: `.yellow);
+                    console.log(`Temperatura max: `.yellow);
+                    yield inquirerPausa();
+                    break;
+                case 2:
+                    break;
+                default:
+                    break;
+                    yield inquirerPausa();
+            }
         }
     } while (opt !== 0);
 });
