@@ -12,8 +12,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const { leerInput, inquirerMenu, inquirerPausa } = require("./helpers/inquirer");
 const Busquedas = require("./models/busquedas");
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
+    console.clear();
     let opt;
     const busquedas = new Busquedas();
+    let lugar;
+    let posiblesLugares;
     do {
         opt = yield inquirerMenu();
         if (opt !== 0) {
@@ -21,7 +24,8 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
                 case 0:
                     break;
                 case 1:
-                    const lugar = yield leerInput("Ciudad: ");
+                    lugar = yield leerInput("Ciudad: ");
+                    posiblesLugares = busquedas.buscarCiudad(lugar);
                     console.log(`\n\t=======Información de la Ciudad======\n`.bgWhite.black);
                     console.log(`Ciudad: `.yellow);
                     console.log(`Lat: `.yellow);
@@ -29,14 +33,13 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
                     console.log(`Temperatura: `.yellow);
                     console.log(`Temperatura min: `.yellow);
                     console.log(`Temperatura max: `.yellow);
-                    yield inquirerPausa();
                     break;
                 case 2:
                     break;
                 default:
                     break;
-                    yield inquirerPausa();
             }
+            yield inquirerPausa();
         }
     } while (opt !== 0);
 });

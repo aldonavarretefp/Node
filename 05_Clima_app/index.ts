@@ -5,8 +5,12 @@ const { leerInput, inquirerMenu, inquirerPausa } = require("./helpers/inquirer")
 const Busquedas = require("./models/busquedas");
 
 const main = async () =>{
+    console.clear();
+    
     let opt:number;
     const busquedas = new Busquedas();
+    let lugar:string;
+    let posiblesLugares:string[];
 
     do {
         opt = await inquirerMenu();
@@ -17,8 +21,9 @@ const main = async () =>{
                     break;
                 case 1:
                     //Mostrar mensaje
-                    const lugar:string = await leerInput("Ciudad: ");
+                    lugar = await leerInput("Ciudad: ");
                     //Buscar los lugares
+                    posiblesLugares = busquedas.buscarCiudad(lugar);
                     //Seleccionar el lugar
                     //Clima
                     // Mostrar Resultados
@@ -29,15 +34,15 @@ const main = async () =>{
                     console.log(`Temperatura: `.yellow);
                     console.log(`Temperatura min: `.yellow);
                     console.log(`Temperatura max: `.yellow);
-                    await inquirerPausa();
+
                     break;
                 case 2:
                         //M
                     break;
                 default:
                     break;
-                await inquirerPausa();
-            }
+                }
+            await inquirerPausa();
         }
         
     } while (opt!==0);
