@@ -2,7 +2,7 @@ import colors from "colors";
 require('dotenv').config();
 
 
-const { leerInput, inquirerMenu, inquirerPausa } = require("./helpers/inquirer");
+const { leerInput, inquirerMenu, inquirerPausa,listarLugares } = require("./helpers/inquirer");
 const Busquedas = require("./models/busquedas");
 
 const main = async () =>{
@@ -12,6 +12,8 @@ const main = async () =>{
     const busquedas = new Busquedas();
     let lugarABuscar:string;
     let posiblesLugares:any[];
+    // let lugarId:number;
+    let lugarSeleccionado:any;
 
     do {
         opt = await inquirerMenu();
@@ -23,20 +25,23 @@ const main = async () =>{
                 case 1:
                     //Mostrar mensaje
                     lugarABuscar = await leerInput("Ciudad: ");
+
                     //Buscar los lugares
                     posiblesLugares = await busquedas.buscarCiudad(lugarABuscar);
-                    console.log(posiblesLugares);
-                    //Seleccionar el lugar
-                    
+
+                    //Lista y Selecciona el lugar
+                    const lugarId:number = await listarLugares(posiblesLugares);
+                    lugarSeleccionado = posiblesLugares.find(lugar => lugar.id===lugarId);
+
                     //Clima
                     // Mostrar Resultados
                     console.log(`\n\t=======Información de la Ciudad======\n`.bgWhite.black);
-                    console.log(`Ciudad: `.yellow);
-                    console.log(`Lat: `.yellow);
-                    console.log(`Long: `.yellow);
-                    console.log(`Temperatura: `.yellow);
-                    console.log(`Temperatura min: `.yellow);
-                    console.log(`Temperatura max: `.yellow);
+                    console.log(`${'Ciudad:'.green}\t ${lugarSeleccionado.nombre}`.yellow);
+                    console.log(`${'Lat:'.green}\t ${lugarSeleccionado.lat}`.yellow);
+                    console.log(`${'Long:'.green}\t  ${lugarSeleccionado.long}`.yellow);
+                    console.log(`${'Temperatura:'.green}\t  `.yellow);
+                    console.log(`${'Temperatura min:'.green}\t`.yellow);
+                    console.log(`${'Temperatura max:'.green}\t`.yellow);
 
                     break;
                 case 2:
