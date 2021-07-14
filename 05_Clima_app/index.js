@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+require('dotenv').config();
 const { leerInput, inquirerMenu, inquirerPausa } = require("./helpers/inquirer");
 const Busquedas = require("./models/busquedas");
 const main = () => __awaiter(void 0, void 0, void 0, function* () {

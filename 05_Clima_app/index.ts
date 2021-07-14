@@ -1,4 +1,5 @@
-import colors from "colors"
+import colors from "colors";
+require('dotenv').config();
 
 
 const { leerInput, inquirerMenu, inquirerPausa } = require("./helpers/inquirer");
@@ -6,7 +7,7 @@ const Busquedas = require("./models/busquedas");
 
 const main = async () =>{
     console.clear();
-    
+
     let opt:number;
     const busquedas = new Busquedas();
     let lugar:string;
