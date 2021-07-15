@@ -1,5 +1,5 @@
 const express = require('express')
-const app = express();
+const app = express()
 
 app.get('/',(req:any, res:any)=> {;
     res.send('Home page');
@@ -13,4 +13,4 @@ app.get('/hola-mundo',(req:any, res:any)=> {
 app.get('*',(req:any, res:any) =>{
     res.send('404 | PAGE NOT FOUND');
 })
-app.listen(8080)
+app.listen(8080);
