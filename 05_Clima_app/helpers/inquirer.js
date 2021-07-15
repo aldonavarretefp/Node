@@ -64,7 +64,7 @@ const leerInput = async (message = '')=>{
 
 const listarLugares = async (lugares =[]) =>{
     const choices = lugares.map((lugar,i)=>{
-        let index = i+1
+        const index = i+1;
         return {
             value: lugar.id,
             name: `\t${`${index}.`.green} ${lugar.nombre}`
