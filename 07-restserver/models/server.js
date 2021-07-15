@@ -18,9 +18,35 @@ class Server {
         this.app.use(express.static('public'));
     }
     routes(){
-        //endpoints
+        //Endpoints:
+        //Obtener info
         this.app.get('/api', (req, res)=> {
-            res.send('Hello World')
+            res.json({
+                msg: "get API"
+            });
+        })
+        //Actualizando data
+        this.app.put('/api', (req, res)=> {
+            res.json({
+                msg: "put API"
+            });
+        })
+        //Crear nuevos recursos
+        this.app.post('/api', (req, res)=> {
+            res.json({
+                msg: "post API"
+            });
+        })
+        //Borrar, marcandolo nadamas
+        this.app.delete('/api', (req, res)=> {
+            res.json({
+                msg: "delete API"
+            });
+        })
+        this.app.patch('/api', (req, res)=> {
+            res.json({
+                msg: "patch API"
+            });
         })
     }
     listen(){
