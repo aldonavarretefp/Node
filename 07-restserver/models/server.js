@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 
 class Server {
     //Usualmente las propiedades se declaran en constructor
@@ -12,10 +13,11 @@ class Server {
         this.routes();
 
     }
-    //Colocar middlewares
+
     middlewares(){
         //Directorio publico
         this.app.use(express.static('public'));
+        this.app.use(cors());
     }
     routes(){
         //Endpoints:
