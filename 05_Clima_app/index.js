@@ -20,21 +20,28 @@ const main = async () => {
                     lugarABuscar = await leerInput("Ciudad: ");
                     posiblesLugares = await busquedas.buscarCiudad(lugarABuscar);
                     const lugarId = await listarLugares(posiblesLugares);
-                    lugarSeleccionado = posiblesLugares.find(lugar => lugar.id === lugarId);
-                    const clima = await busquedas.clima(lugarSeleccionado.lat, lugarSeleccionado.long);
-                    console.log(`\n\t=======Información de la Ciudad======`.bgWhite.black);
-                    console.log(`${'Ciudad:'.green}\t ${lugarSeleccionado.nombre}`.yellow);
-                    console.log(`${'Lat:'.green}\t\t ${lugarSeleccionado.lat}`.yellow);
-                    console.log(`${'Long:'.green}\t\t  ${lugarSeleccionado.long}`.yellow);
-                    console.log(`${'Clima:'.green}\t\t  ${`${clima.desc}`.charAt(0).toUpperCase().concat(clima.desc.substring(1))}`.yellow);
-                    console.log(`${'Temperatura:'.green}\t  ${Math.round(clima.temp)}°C`.yellow);
-                    console.log(`${'Sensación de:'.green}\t  ${Math.round(clima.temp)}°C`.yellow);
-                    console.log(`${'Temperatura min:'.green}  ${Math.round(clima.min)}°C`.yellow);
-                    console.log(`${'Temperatura max:'.green}  ${Math.round(clima.max)}°C`.yellow);
-                    console.log(`${'Humedad:'.green}\t ${clima.humedad}%`.yellow);
-                    console.log(`${'Presion:'.green}\t ${clima.presion}hPa`.yellow);
+                    if (lugarId) {
+                        lugarSeleccionado = posiblesLugares.find(lugar => lugar.id === lugarId);
+                        busquedas.agregarHistorial(lugarSeleccionado.nombre);
+                        const clima = await busquedas.clima(lugarSeleccionado.lat, lugarSeleccionado.long);
+                        console.log(`\n\t=======Información de la Ciudad======`.bgWhite.black);
+                        console.log(`${'Ciudad:'.green}\t ${lugarSeleccionado.nombre}`.yellow);
+                        console.log(`${'Lat:'.green}\t\t ${lugarSeleccionado.lat}`.yellow);
+                        console.log(`${'Long:'.green}\t\t  ${lugarSeleccionado.long}`.yellow);
+                        console.log(`${'Clima:'.green}\t\t  ${`${clima.desc}`.charAt(0).toUpperCase().concat(clima.desc.substring(1))}`.yellow);
+                        console.log(`${'Temperatura:'.green}\t  ${Math.round(clima.temp)}°C`.yellow);
+                        console.log(`${'Sensación de:'.green}\t  ${Math.round(clima.temp)}°C`.yellow);
+                        console.log(`${'Temperatura min:'.green}  ${Math.round(clima.min)}°C`.yellow);
+                        console.log(`${'Temperatura max:'.green}  ${Math.round(clima.max)}°C`.yellow);
+                        console.log(`${'Humedad:'.green}\t ${clima.humedad}%`.yellow);
+                        console.log(`${'Presion:'.green}\t ${clima.presion}hPa`.yellow);
+                    }
                     break;
                 case 2:
+                    busquedas.historialCapitalizado.forEach((element, i) => {
+                        let idx = `${i + 1}.`.green;
+                        console.log(`${idx} ${element}`);
+                    });
                     break;
                 default:
                     break;

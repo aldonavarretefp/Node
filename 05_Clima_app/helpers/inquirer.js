@@ -28,7 +28,7 @@ const inquirerMenu = async () => {
         }
     ];
     console.log("\t===============".green)
-    console.log("\t   Aplicacion clima")
+    console.log("\tAplicacion clima".bgGreen.black);
     console.log("\t===============".green)
     const {opt} =await inquirer.prompt(preguntas)
     return opt;

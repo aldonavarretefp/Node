@@ -1,9 +1,21 @@
+const fs = require("fs");
+
 const axios = require('axios').default;
+
 class Busquedas {
-    historial:string[] = ["madrid","San Jose"]
+    historial:string[] = []
+    dbPath:string = './db/database.json';
     
     constructor(){
-        //TODO: Leer DB si existe
+        const data = this.leerDB();
+        
+    }
+    get historialCapitalizado(){
+        return this.historial.map((lugar:string)=>{
+            let palabras:string[] = lugar.split(" ");
+            palabras = palabras.map(p=>p.charAt(0).toUpperCase() + p.substr(1));
+            return palabras.join(" ")
+        });
     }
 
     get paramMapbox(){
@@ -27,7 +39,6 @@ class Busquedas {
             const instance = axios.create({
                 baseURL: `https://api.mapbox.com/geocoding/v5/mapbox.places/${lugar}.json`,
                 params:this.paramMapbox,
-                timeout: 1000,
             });
 
             const resp = await instance.get();
@@ -52,7 +63,6 @@ class Busquedas {
             const instance = axios.create({
                 baseURL: `https://api.openweathermap.org/data/2.5/weather`,
                 params: {...this.paramOpenWeather,lat,lon},
-                timeout: 1000,
             });
             const resp = await instance.get();
             //desc,min,max,temp
@@ -73,6 +83,34 @@ class Busquedas {
         }
 
     }
+
+    agregarHistorial(lugar:string):void{
+        //prevenir duplicados
+        if (this.historial.includes(lugar.toLowerCase())){
+            return;
+        }
+        this.historial = this.historial.splice(0,5);
+        this.historial.unshift(lugar.toLocaleLowerCase());
+        this.guardarDB();
     
+    }
+    guardarDB(){
+        const payload = {
+            historial: this.historial
+        }
+        fs.writeFileSync(this.dbPath,JSON.stringify(payload))
+
+    }
+    leerDB(){
+        if(!fs.existsSync(this.dbPath)){
+            return null
+        }
+        const infoString = fs.readFileSync(this.dbPath,{
+            encoding: "utf-8",
+        });
+        const data = JSON.parse(infoString);
+    
+        this.historial = data.historial;
+    }
 }
 export = Busquedas;
