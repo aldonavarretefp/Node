@@ -7,7 +7,7 @@ router.get('/', usuariosGet);
 //Actualizando data
 router.put('/',usuariosPut)
 //Crear nuevos recursos
-router.post('/:id', usuariosPost)
+router.post('/', usuariosPost)
 //Borrar, marcandolo nadamas
 router.delete('/', usuariosDelete)
 router.patch('/', usuariosPatch);
