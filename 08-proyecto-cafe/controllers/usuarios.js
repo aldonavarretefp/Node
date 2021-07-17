@@ -16,12 +16,6 @@ const usuariosPost = async (req, res =response)=> {
     const {nombre,correo, password,rol,google} = req.body;
     const usuario  = new Usuario({nombre,correo,password,rol,google});
 
-    //Verificar si el correo existe
-    const existeEmail = await Usuario.findOne({correo});
-    if(existeEmail)return res.status(400).json({
-        msg: `${correo} ya esta registrado` 
-    });
-
     //Encriptar password
     const salt = bcrypt.genSaltSync(10);
     usuario.password = bcrypt.hashSync(password, salt);
