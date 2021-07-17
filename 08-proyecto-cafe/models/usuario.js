@@ -1,6 +1,6 @@
 const {Schema,model} = require("mongoose");
 
-const usuarioSchema = Schema({
+const usuarioSchema = new Schema({
     nombre: {
         type:String,
         required: [true,"Nombre obligatorio"]
@@ -34,5 +34,12 @@ const usuarioSchema = Schema({
     
     
 });
+
+usuarioSchema.methods.toJSON = function(){
+    //Desestructurando el objeto quitandole lo que no quiero
+    // que se vea en el response
+    const {__v,password,...usuario} = this.toObject();
+    return usuario
+}
 
 module.exports = model('Usuario',usuarioSchema);

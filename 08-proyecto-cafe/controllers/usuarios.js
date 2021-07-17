@@ -2,7 +2,9 @@ const {response} = require('express');
 const bcrypt = require('bcryptjs');
 const colors = require("colors");
 
+
 const Usuario = require('../models/usuario');
+
 
 
 const usuariosGet = (req, res =response)=> {
@@ -15,6 +17,10 @@ const usuariosPost = async (req, res =response)=> {
     const usuario  = new Usuario({nombre,correo,password,rol,google});
 
     //Verificar si el correo existe
+    const existeEmail = await Usuario.findOne({correo});
+    if(existeEmail)return res.status(400).json({
+        msg: `${correo} ya esta registrado` 
+    });
 
     //Encriptar password
     const salt = bcrypt.genSaltSync(10);
@@ -22,7 +28,7 @@ const usuariosPost = async (req, res =response)=> {
     //Graba en db
         await usuario.save();
     res.json({
-        msg: "post API - Controlador",
+        msg: "createdUser",
         usuario
     });
 }
