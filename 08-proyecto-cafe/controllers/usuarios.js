@@ -23,8 +23,8 @@ const usuariosGet = async (req, res =response)=> {
     ]);
     res.json({
         msg: "users:",
-        usuarios,
-        total
+        total,
+        usuarios
     });
 }
 const usuariosPost = async (req, res =response)=> {
@@ -62,9 +62,21 @@ const usuariosPatch = (req, res =response)=> {
         msg: "patch API - Controlador"
     });
 }
-const usuariosDelete = (req, res =response)=> {
+const usuariosDelete = async (req, res =response)=> {
+    const {id} = req.params;
+    const filter = { _id: id,estado:true };
+    const update = { estado:false };
+    const usuario = await  Usuario.findOneAndUpdate(filter,update);
+    if (!usuario){
+        res.json({
+            msg: "NO SE ENCONTRO NINGUN USUARIO ACTIVO",
+        });
+        return
+    }
     res.json({
-        msg: "delete API - Controlador"
+        msg: "deletedUser:",
+        id,
+        usuario
     });
 }
 

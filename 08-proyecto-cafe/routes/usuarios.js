@@ -27,7 +27,12 @@ router.post('/',[
     validarCampos
 ],usuariosPost);
 //Borrar, marcandolo nadamas
-router.delete('/', usuariosDelete)
+router.delete('/:id',[
+    check('id','ID_INVALIDO').isMongoId(),
+    check('id').custom(existeUsuarioporId),
+    validarCampos
+], usuariosDelete)
+
 router.patch('/', usuariosPatch);
 
 
