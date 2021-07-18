@@ -9,16 +9,22 @@ const Usuario = require('../models/usuario');
 
 const usuariosGet = async (req, res =response)=> {
     const {limite = 5,desde = 0} = req.query;
+    const query = {estado:true};
     if (Number(desde)>=Number(limite)) {
         res.json({msg:"SINTAXIS_INVALIDA"})
         return
     };
-    const usuarios = await Usuario.find()
-                                    .limit(Number(limite))
-                                    .skip(Number(desde));
+
+    const [usuarios,total] = await Promise.all([
+        Usuario.find(query)
+                .limit(Number(limite))
+                .skip(Number(desde)),
+        Usuario.countDocuments(query)
+    ]);
     res.json({
         msg: "users:",
-        usuarios
+        usuarios,
+        total
     });
 }
 const usuariosPost = async (req, res =response)=> {
