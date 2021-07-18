@@ -1,16 +1,21 @@
 const {Router} = require('express');
-const {body} = require('express-validator');
+const {body,check} = require('express-validator');
 const router = Router();
 
 const { usuariosGet, usuariosPut, usuariosPost, usuariosDelete, usuariosPatch } = require('../controllers/usuarios');
-const { esRoleValido, existeEmail } = require('../helpers/db-validators');
+const { esRoleValido, existeEmail, existeUsuarioporId } = require('../helpers/db-validators');
 const { validarCampos } = require('../middlewares/validar-campos');
 
 //Endpoints:
 //Obtener info
 router.get('/', usuariosGet);
 //Actualizando data
-router.put('/',usuariosPut)
+router.put('/:id',[
+    check('id','ID_INVALIDO').isMongoId(),
+    check('id').custom(existeUsuarioporId),
+    check('rol').custom(esRoleValido),
+    validarCampos
+],usuariosPut)
 //Crear nuevos recursos
 router.post('/',[
     body("correo","CORREO_INVALIDO").isEmail(),

@@ -7,9 +7,18 @@ const Usuario = require('../models/usuario');
 
 
 
-const usuariosGet = (req, res =response)=> {
+const usuariosGet = async (req, res =response)=> {
+    const {limite = 5,desde = 0} = req.query;
+    if (Number(desde)>=Number(limite)) {
+        res.json({msg:"SINTAXIS_INVALIDA"})
+        return
+    };
+    const usuarios = await Usuario.find()
+                                    .limit(Number(limite))
+                                    .skip(Number(desde));
     res.json({
-        msg: "get API - Controlador",
+        msg: "users:",
+        usuarios
     });
 }
 const usuariosPost = async (req, res =response)=> {
@@ -26,9 +35,20 @@ const usuariosPost = async (req, res =response)=> {
         usuario
     });
 }
-const usuariosPut = (req, res =response)=> {
+const usuariosPut = async (req, res =response)=> {
+    const {id} = req.params;
+    const {_id,password,google,correo,...restoUsuario} = req.body;
+
+    if (password) {
+        const salt = bcrypt.genSaltSync(10);
+        restoUsuario.password = bcrypt.hashSync(password, salt);
+    }
+
+    const usuario = await Usuario.findByIdAndUpdate(id,restoUsuario)
     res.json({
-        msg: "put API - Controlador"
+        msg: "updatedUser",
+        usuario,
+        id
     });
 }
 const usuariosPatch = (req, res =response)=> {

@@ -9,11 +9,16 @@ const esRoleValido = async (rol='')=>{
 }
 const existeEmail = async (correo='')=>{
     const existeEmail = await Usuario.findOne({correo});
-    if(existeEmail)throw new Error(`${correo} ya esta registrado`) ;
+    if(existeEmail)throw new Error(`${correo} ya esta registrado`);
+}
+const existeUsuarioporId = async (id)=>{
+    const existeUsuario = await Usuario.findById(id);
+    if(!existeUsuario)throw new Error(`${id} no existe`);
 }
 
 
 module.exports = {
     esRoleValido,
-    existeEmail
+    existeEmail,
+    existeUsuarioporId
 };
