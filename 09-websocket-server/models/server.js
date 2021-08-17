@@ -38,6 +38,9 @@ class Server {
             console.log(`Cliente ${socket.id} conectado`);
             socket.on('disconnect',()=>{
                 console.log('Cliente desconectado');
+            });
+            socket.on('enviar-mensaje', (payload) => {
+                console.log(payload);              
             })
         });
     }
