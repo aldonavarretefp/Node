@@ -17,8 +17,12 @@ class Server {
         this.middlewares();
         //Rutas de mi aplicacion
         this.routes();
+        //Sockets
+        this.sockets();
 
     }
+
+    
     middlewares(){
         //CORS
         this.app.use(cors());
@@ -28,6 +32,14 @@ class Server {
     routes(){
         //Configurando las rutas
         // this.app.use(this.usuariosPath,require("../routes/usuarios"));
+    }
+    sockets(){
+        this.io.on('connection',socket => {
+            console.log(`Cliente ${socket.id} conectado`);
+            socket.on('disconnect',()=>{
+                console.log('Cliente desconectado');
+            })
+        });
     }
     listen(){
         this.server.listen(this.port,()=>{
