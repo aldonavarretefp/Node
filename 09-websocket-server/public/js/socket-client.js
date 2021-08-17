@@ -25,7 +25,7 @@ socket.on('disconnect',() => {
 
 socket.on('enviar-mensaje',({msg}) => {
     console.log(msg);
-})
+});
 
 btnEnviar.addEventListener('click',() => {
 
@@ -37,5 +37,7 @@ btnEnviar.addEventListener('click',() => {
         fecha:new Date().getTime()
     }
 
-    socket.emit('enviar-mensaje',payload);
+    socket.emit('enviar-mensaje',payload,(id) => {
+        console.log(id);
+    });
 });
