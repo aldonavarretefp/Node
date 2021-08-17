@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const colors = require('colors');
 
 
 class Server {
@@ -35,12 +36,12 @@ class Server {
     }
     sockets(){
         this.io.on('connection',socket => {
-            console.log(`Cliente ${socket.id} conectado`);
+            console.log(`Cliente ${`${socket.id} `.magenta}`+ 'conectado'.green);
             socket.on('disconnect',()=>{
-                console.log('Cliente desconectado');
+                console.log('Cliente ' + 'desconectado'.red);
             });
             socket.on('enviar-mensaje', (payload) => {
-                console.log(payload);              
+                this.io.emit('enviar-mensaje',payload)            
             })
         });
     }
