@@ -3,6 +3,9 @@ const cors = require('cors');
 const colors = require('colors');
 
 
+const {socketController} = require('../sockets/controller');
+
+
 class Server {
     //Usualmente las propiedades se declaran en constructor
     constructor(){
@@ -35,20 +38,7 @@ class Server {
         // this.app.use(this.usuariosPath,require("../routes/usuarios"));
     }
     sockets(){
-        this.io.on('connection',socket => {
-            console.log(`Cliente ${`${socket.id} `.magenta}`+ 'conectado'.green);
-            socket.on('disconnect',()=>{
-                console.log('Cliente ' + 'desconectado'.red);
-            });
-            socket.on('enviar-mensaje', (payload,callback) => {
-                //Por si se quiere grabar en base de datos
-                const id = 123456;
-                callback( {id,fecha:new Date().getTime()} )
-
-
-                // this.io.emit('enviar-mensaje',payload)            
-            })
-        });
+        this.io.on('connection',socketController);
     }
     listen(){
         this.server.listen(this.port,()=>{

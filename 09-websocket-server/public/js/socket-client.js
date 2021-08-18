@@ -23,8 +23,8 @@ socket.on('disconnect',() => {
 
 });
 
-socket.on('enviar-mensaje',({msg}) => {
-    console.log(msg);
+socket.on('enviar-mensaje',(payload) => {
+    console.log(payload);
 });
 
 btnEnviar.addEventListener('click',() => {
