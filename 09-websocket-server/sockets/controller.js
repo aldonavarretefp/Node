@@ -2,10 +2,10 @@
 
 const socketController = (socket) => {
 
-    console.log(`Cliente ${`${socket.id} `.magenta}`+ 'conectado'.green);
+    console.log(`Cliente ${socket.id} `+ 'conectado'.green);
     
     socket.on('disconnect',()=>{
-        console.log('Cliente ' + 'desconectado'.red);
+        console.log('Cliente ' + 'desconectado');
     });
 
     socket.on('enviar-mensaje', (payload,callback) => {
