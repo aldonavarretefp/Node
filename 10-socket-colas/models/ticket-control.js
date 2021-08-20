@@ -63,7 +63,8 @@ class TicketControl {
         ticket.escritorio = escritorio;
 
         this.ultimos4.unshift(ticket);
-        if (this.ultimos4.length < 4) {
+
+        if (this.ultimos4.length > 4) {
             this.ultimos4.splice(-1,1);
         }
 
