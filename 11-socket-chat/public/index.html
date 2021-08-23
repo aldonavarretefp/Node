@@ -13,7 +13,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-9 col-sm">
-                <h1 class="display-1">Google </h1>
+                <h1 class="display-5">Google </h1>
             </div>
             <div class="col-lg-3 col -sm d-flex justify-content-center align-items-center">
                 <div class="g-signin2" style="width: 200px; height: 50px;" data-onsuccess="onSignIn"></div>
@@ -26,47 +26,25 @@
             </div>
 
         </div>
+        <div class="row">
+            <div class="col-lg-4 ">
+                <h1 class="display-5 ">Login Manual</h1>
+                <form>
+                    <div class="mb-3">
+                      <label for="exampleInputEmail1" class="form-label">Correo</label>
+                      <input name="correo" class="form-control" id="exampleInputEmail1" placeholder="Correo" aria-describedby="emailHelp">
+                
+                    </div>
+                    <div class="mb-3">
+                      <label for="exampleInputPassword1"  class="form-label">Contraseña</label>
+                      <input name="password" class="form-control" placeholder="Contraseña" d="exampleInputPassword1">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                  </form>
+            </div>
+        </div>
     </div>
-
-
-
-
-    <script>
-        var url = ( window.location.hostname.includes("localhost") )
-                    ? 'http://localhost:8080/api/auth/google'
-                    : 'https://rest-server-aldo.herokuapp.com/api/auth/google';
-
-
-        function onSignIn(googleUser) {
-            var profile = googleUser.getBasicProfile();
-            console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-            console.log('Name: ' + profile.getName());
-            console.log('Image URL: ' + profile.getImageUrl());
-            console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-            var id_token = googleUser.getAuthResponse().id_token;
-            const data = {id_token};
-            //Peticion post desde el frontend
-                fetch(url,{
-                            method: 'POST',
-                            headers: {'Content-Type': 'application/json'},
-                            body: JSON.stringify(data)
-                            }
-                    )
-                    .then(response=>response.json())
-                    .then(data=>console.log("SERVER RESPONSE: \n",data))
-                    .catch(console.log);
-
-        }
-        function signOut() {
-            var auth2 = gapi.auth2.getAuthInstance();
-            auth2.signOut().then(function () {
-            console.log('User signed out.');
-            });
-        }
-
-
-
-    </script>
+    <script src="./js/auth.js"></script>
 
 </body>
 </html>
