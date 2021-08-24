@@ -16,19 +16,32 @@ const validarJWT = async() => {
 
     fetch(url,{headers:{"x-token": token}})
     .then(response => response.json())
-    .then(( { usuario:usuarioDB, token:tokenDB }) => console.log(`Usuario: ${usuarioDB}, Token: ${tokenDB}`))
+    .then(({ usuario:usuarioDB, token:tokenDB }) => {
+        usuario = usuarioDB;
+        //Nueva vida al token en en chat
+        localStorage.setItem('token', tokenDB);
+        document.title = usuario.nombre;
+    })
     .catch(console.log)
+    await conectarSocket();
 
-    //Nueva vida al token en en chat
-    localStorage.setItem('token', tokenDB);
-    usuario = usuarioDB;
+}
+const conectarSocket = async () => {
+    //Que se conecte
+    const socket = io({
+        //Pagina de socket io para mandar cosas al backend
+        "extraHeaders": {
+            'x-token': localStorage.getItem('token')
+        }
+    });
+
 }
 
 
 const main = async (params) => {
     
     //Validar JWT
-    await validarJWT()
+    await validarJWT();
     
 
 
@@ -40,5 +53,3 @@ main();
 
 
 
-
-// const socket = io();
