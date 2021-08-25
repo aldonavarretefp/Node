@@ -39,6 +39,4 @@ class ChatMensajes {
     }
 }
 
-module.exports = {
-    ChatMensajes
-}
+module.exports = ChatMensajes;
