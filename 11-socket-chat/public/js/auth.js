@@ -13,7 +13,6 @@ miFormulario.addEventListener('submit',(e) => {
             formData[element.name] = element.value;
         }
     }
-
     fetch(url + 'login',{
         method: 'POST',
         body: JSON.stringify(formData),
@@ -33,26 +32,28 @@ miFormulario.addEventListener('submit',(e) => {
 })
 
 function onSignIn(googleUser) {
-    // const profile = googleUser.getBasicProfile();
-    // console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-    // console.log('Name: ' + profile.getName());
-    // console.log('Image URL: ' + profile.getImageUrl());
-    // console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+    const profile = googleUser.getBasicProfile();
+    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+    console.log('Name: ' + profile.getName());
+    console.log('Image URL: ' + profile.getImageUrl());
+    const correo = profile.getEmail();
+    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
     const id_token = googleUser.getAuthResponse().id_token;
     const data = {id_token};
+    console.log(data);
     //Peticion post desde el frontend
-        fetch(url + "google",{
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify(data)
-                    }
-            )
-            .then(response=>response.json())
-            .then(({id_token})=>{
-                localStorage.setItem("token",id_token)
-                // window.location = "chat.html";
-            })
-            .catch(console.log);
+    fetch(url + "google",{
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {'Content-Type': 'application/json'}
+                }
+        )
+        .then(response=>response.json())
+        .then(({token})=>{
+            localStorage.setItem("token",token)
+            window.location = "chat.html";
+        })
+        .catch(console.log);
 
 }
 function signOut() {

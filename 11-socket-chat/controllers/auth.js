@@ -59,11 +59,14 @@ const googleSignIn = async (req = request, res = response) => {
             //Guardando en DB
             await usuario.save();
         }
+        //JWT
+        const token = await generarJWT(usuario.id);
 
         res.status(200).json({
             msg: 'Todo OK!, Google SignIn',
             usuario:{nombre,correo,img},
-            id_token
+            id_token,
+            token
         })
     } catch (error) {
         res.status(400).json({
