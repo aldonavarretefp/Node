@@ -1,3 +1,5 @@
+
+
 const url = (window.location.hostname.includes('localhost'))
             ? 'http://localhost:8080/api/auth/' 
             : 'https://rest-server-aldo.herokuapp.com/api/auth'
@@ -51,20 +53,47 @@ const conectarSocket = async () => {
     socket.on('disconnect',() => {
         console.log("Sockets Offline");
     });
-    socket.on('recibir-mensajes',() => {
-        console.log("Mensaje recibido");
+    socket.on('recibir-mensajes',(payload) => {
+        console.log(payload);
     });
-    socket.on('usuarios-activos',() => {
-        console.log("Usuarios Conectados");
-    });
+    socket.on('usuarios-activos', dibujarUsuarios );
+
     socket.on('mensaje-privado',() => {
         console.log("Mensaje priv");
     });
 
+};
+
+const dibujarUsuarios = (usuarios = {}) => {
+    let usersHtml = "";
+    usuarios.forEach((usuario) => {
+        usersHtml += `
+            <li>
+                <p>
+                    <h5 class="lead text-success"> <!--&#128994 -->  ${usuario.nombre}</h5>
+                    <span class="text-muted">${usuario.uid}</span>
+                </p>
+            </li>
+        `;
+
+    });
+
+    ulUsuarios.innerHTML = usersHtml;
 }
 
+txtMensaje.addEventListener('keyup', function({keyCode}) {
+    const mensaje = txtMensaje.value;
+    const uid = txtUid.value;
 
-const main = async (params) => {
+    //Al dar enter, mandará el mensaje
+    if(keyCode!==13){return;}
+    if(mensaje.length===0){return;}
+
+    socket.emit('enviar-mensaje',{uid,mensaje});
+});
+
+
+const main = async () => {
     
     //Validar JWT
     await validarJWT();
