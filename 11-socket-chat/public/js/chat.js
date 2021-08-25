@@ -53,9 +53,7 @@ const conectarSocket = async () => {
     socket.on('disconnect',() => {
         console.log("Sockets Offline");
     });
-    socket.on('recibir-mensajes',(payload) => {
-        console.log(payload);
-    });
+    socket.on('recibir-mensajes', dibujarMensajes);
     socket.on('usuarios-activos', dibujarUsuarios );
 
     socket.on('mensaje-privado',() => {
@@ -64,7 +62,7 @@ const conectarSocket = async () => {
 
 };
 
-const dibujarUsuarios = (usuarios = {}) => {
+const dibujarUsuarios = (usuarios = []) => {
     let usersHtml = "";
     usuarios.forEach((usuario) => {
         usersHtml += `
@@ -81,6 +79,23 @@ const dibujarUsuarios = (usuarios = {}) => {
     ulUsuarios.innerHTML = usersHtml;
 }
 
+const dibujarMensajes = (mensajes = []) => {
+    let msgsHtml = "";
+    mensajes.forEach(({nombre,mensaje}) => {
+        msgsHtml += `
+            <li class="list-group-item">
+                <p>
+                    <span class="text-primary">${nombre}</span>
+                    <span>${mensaje}</span>
+                </p>
+            </li>
+        `;
+
+    });
+
+    ulMensajes.innerHTML = msgsHtml;
+}
+
 txtMensaje.addEventListener('keyup', function({keyCode}) {
     const mensaje = txtMensaje.value;
     const uid = txtUid.value;
@@ -90,6 +105,8 @@ txtMensaje.addEventListener('keyup', function({keyCode}) {
     if(mensaje.length===0){return;}
 
     socket.emit('enviar-mensaje',{uid,mensaje});
+
+    txtMensaje.value = '';
 });
 
 

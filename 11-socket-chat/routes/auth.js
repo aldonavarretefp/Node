@@ -10,9 +10,7 @@ const { login,googleSignIn,renovarToken } = require('../controllers/auth');
 
 const router = Router();
 
-router.get('/',[
-    validarJWT   
-],renovarToken);
+router.get('/',validarJWT,renovarToken);
 
 router.post('/login',[
     check('correo', 'El correo es obligatorio').isEmail(),
