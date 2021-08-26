@@ -56,8 +56,8 @@ const conectarSocket = async () => {
     socket.on('recibir-mensajes', dibujarMensajes);
     socket.on('usuarios-activos', dibujarUsuarios );
 
-    socket.on('mensaje-privado',() => {
-        console.log("Mensaje priv");
+    socket.on('mensaje-privado',({de,mensaje}) => {
+        console.log(`Priv: de ${de} mensaje: ${mensaje}` );
     });
 
 };
