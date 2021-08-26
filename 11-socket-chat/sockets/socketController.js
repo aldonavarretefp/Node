@@ -13,8 +13,15 @@ const socketController = async (socket,io) => {
     chatMensajes.agregarUsuario(usuario);
     
     io.emit('usuarios-activos',chatMensajes.usuariosArr);
-
     socket.emit('recibir-mensajes',chatMensajes.ultimos10);
+
+    // Una vez el cliente se conecta, meterlo a una sala especial , y que sean reconocidos
+    // por su uid de mongo en este caso.
+    
+
+    socket.join(usuario.id) ; // Global, Socket.id, Usuario.id
+
+
 
     // Borrarlo si se desconcecta
     socket.on('disconnect', () => {
@@ -22,11 +29,16 @@ const socketController = async (socket,io) => {
         io.emit('usuarios-activos',chatMensajes.usuariosArr);
     });
 
-    socket.to(socket.id)
+    socket.to(socket.id);
     
     socket.on('enviar-mensaje',({uid,mensaje}) => {
-        chatMensajes.enviarMensaje(usuario.id,usuario.nombre,mensaje);
-        io.emit('recibir-mensajes',chatMensajes.ultimos10);
+        // Si viene un uid es para alguien en especifico (privado)
+        if(uid){
+            socket.to(uid).emit('mensaje-privado',{de: usuario.nombre, mensaje});
+        }else{
+            chatMensajes.enviarMensaje(usuario.id,usuario.nombre,mensaje);
+            io.emit('recibir-mensajes',chatMensajes.ultimos10);
+        }
     });
 
 }
