@@ -1,8 +1,14 @@
 import express ,{Application}from 'express';
+import cors from 'cors';
+import userRoutes from '../routes/usuario';
 
 class Server{
     private app: Application;
     private port: string;
+    private paths = {
+        usuarios:'/api/usuarios'
+    };
+
     constructor(){
         this.app = express();
         this.port = process.env.PORT || "8000";
