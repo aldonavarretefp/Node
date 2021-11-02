@@ -47,7 +47,11 @@ var getUsuarios = function (req, res) { return __awaiter(void 0, void 0, void 0,
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, usuario_1.default.findAll()];
+                return [4 /*yield*/, usuario_1.default.findAll({
+                        where: {
+                            estado: 1
+                        }
+                    })];
             case 1:
                 usuarios = _a.sent();
                 res.status(200).json({
@@ -101,29 +105,117 @@ var getUsuario = function (req, res) { return __awaiter(void 0, void 0, void 0, 
     });
 }); };
 exports.getUsuario = getUsuario;
-var postUsuario = function (req, res) {
-    var body = req.body;
-    res.status(200).json({
-        msg: 'postUsuario',
-        body: body
+var postUsuario = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var body, existeEmail, usuario, error_3;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                body = req.body;
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 5, , 6]);
+                return [4 /*yield*/, usuario_1.default.findOne({
+                        where: {
+                            email: body.email
+                        }
+                    })];
+            case 2:
+                existeEmail = _a.sent();
+                if (existeEmail) {
+                    return [2 /*return*/, res.status(400).json({
+                            msg: 'El email ya existe'
+                        })];
+                }
+                return [4 /*yield*/, usuario_1.default.create(body)];
+            case 3:
+                usuario = _a.sent();
+                return [4 /*yield*/, usuario.save()];
+            case 4:
+                _a.sent();
+                res.status(200).json(usuario);
+                return [3 /*break*/, 6];
+            case 5:
+                error_3 = _a.sent();
+                res.status(500).json({
+                    msg: 'Hable con el administrador'
+                });
+                return [3 /*break*/, 6];
+            case 6: return [2 /*return*/];
+        }
     });
-};
+}); };
 exports.postUsuario = postUsuario;
-var putUsuario = function (req, res) {
-    var body = req.body;
-    var id = req.params.id;
-    res.status(200).json({
-        msg: 'putUsuario',
-        body: body
+var putUsuario = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var body, id, usuario, error_4;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                body = req.body;
+                id = req.params.id;
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 4, , 5]);
+                return [4 /*yield*/, usuario_1.default.findByPk(id)];
+            case 2:
+                usuario = _a.sent();
+                console.log(usuario);
+                if (!usuario) {
+                    return [2 /*return*/, res.status(404).json({
+                            msg: "No existe el usuario con el id: " + id
+                        })];
+                }
+                return [4 /*yield*/, usuario.update(body)];
+            case 3:
+                _a.sent();
+                res.status(200).json(usuario);
+                return [3 /*break*/, 5];
+            case 4:
+                error_4 = _a.sent();
+                res.status(500).json({
+                    msg: 'Hable con el administrador'
+                });
+                return [3 /*break*/, 5];
+            case 5: return [2 /*return*/];
+        }
     });
-};
+}); };
 exports.putUsuario = putUsuario;
-var deleteUsuario = function (req, res) {
-    var id = req.params.id;
-    res.status(200).json({
-        msg: 'deleteUsuario',
-        id: id
+var deleteUsuario = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var id, usuario, err_1;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                id = req.params.id;
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 4, , 5]);
+                return [4 /*yield*/, usuario_1.default.findByPk(id)];
+            case 2:
+                usuario = _a.sent();
+                if (!usuario) {
+                    return [2 /*return*/, res.status(404).json({
+                            msg: "No existe el usuario con el id: " + id
+                        })];
+                }
+                return [4 /*yield*/, usuario.update({
+                        estado: 0
+                    })];
+            case 3:
+                _a.sent();
+                res.status(200).json({
+                    msg: "Usuario eliminado",
+                    usuario: usuario
+                });
+                return [3 /*break*/, 5];
+            case 4:
+                err_1 = _a.sent();
+                res.status(500).json({
+                    msg: 'Hable con el administrador'
+                });
+                return [3 /*break*/, 5];
+            case 5: return [2 /*return*/];
+        }
     });
-};
+}); };
 exports.deleteUsuario = deleteUsuario;
 //# sourceMappingURL=usuarios.js.map
